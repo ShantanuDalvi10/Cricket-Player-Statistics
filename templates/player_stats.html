@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Stats</title>
-   <link rel="stylesheet" href="../static/style.css">
+   <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 <body>
     <div class="container">
@@ -30,35 +30,27 @@
 
         <p class="subtitle">Search for the stats of Cricket Player</p>
 
-        <form class="search-form" action="{{url_for('stats.search_player')}}"method="POST">
+        <form class="search-form" action="{{url_for('stats.search_player')}}" method="POST">
             <input
-            type="text" name="player-name" placeholder="Enter Player Name">
+            type="text" name="player_name" placeholder="Enter Player Name">
             <button type="submit">
                 Search
             </button>
         </form>
         {% if player_data %}
-        <div class="stats-card">
-            <h2>{{player_data["Player Name"]}}</h2>
-            <div class="stats-container">
-            <div class="stat-box">
-                <h3>ODI</h3>
-                <p>Matches: {{player_data["ODI Matches"]}}</p>
-                <p>Runs:{{player_data["ODI Runs"]}} </p>
-            </div>
-            <div class="stat-box">
-                <h3>Test</h3>
-                <p>Matches: {{player_data["Test Matches"]}}</p>
-                <p>Runs: {{player_data["Test Runs"]}}</p>
-            </div>
-            <div class="stat-box">
-                <h3>T20I</h3>
-                <p>Matches: {{player_data["T20 Matches"]}}</p>
-                <p>Runs: {{player_data["T20 Runs"]}}</p>
-            </div>
-            </div>
+<div class="stats-card">
+    <h2>{{ player_data["player_name"] }}</h2>
+    <div class="stats-container">
+        {% for fmt in player_data["formats"] %}
+         <div class="stat-box">
+            <h3>{{ fmt["name"] }}</h3>
+            <p>Matches: {{ fmt["matches"] }}</p>
+            <p>Runs: {{ fmt["runs"] }}</p>
         </div>
-        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
     </div>
 
